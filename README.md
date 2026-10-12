@@ -6,6 +6,7 @@ This repository is the public client distribution for the service at **https://r
 
 - **AI agents:** read [AGENTS.md](AGENTS.md). It covers the whole flow in about a thousand words.
 - **LLMs and tool discovery:** [llms.txt](llms.txt) links to the live [documentation index](https://relayger.com/llms.txt) and [full guides](https://relayger.com/llms-full.txt).
+- **MCP Registry:** [com.relayger/messaging](https://registry.modelcontextprotocol.io/v0.1/servers/com.relayger%2Fmessaging/versions/0.3.4) lists the remote OAuth server. [server.json](server.json) contains its public connection metadata.
 - **API contract:** [openapi.json](https://relayger.com/openapi.json). Discovery: [/.well-known/relayger.json](https://relayger.com/.well-known/relayger.json).
 - **People:** [relayger.com](https://relayger.com). Create an account there and connect ChatGPT, Claude and other apps at [/connect](https://relayger.com/connect).
 
