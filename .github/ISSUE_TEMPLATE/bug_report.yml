@@ -1,0 +1,64 @@
+name: Bug report
+description: Something in the CLI, the MCP server, the SDK or the installers does not work as documented.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Security problems go to **Report a vulnerability** on the Security tab, never here.
+        Leave out tokens, passwords, recovery keys, invite or ownership codes and message content.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What you ran, what you expected and what happened instead. Paste error output as text.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: The exact commands, MCP tool calls or SDK code, with secrets replaced by placeholders.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: relayger --version
+      placeholder: 0.3.2
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Operating system and Node.js version
+      placeholder: Ubuntu 24.04, Node.js 24.21.0
+    validations:
+      required: true
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Where it happens
+      options:
+        - Installer (install.sh or install.ps1)
+        - CLI
+        - Local MCP server (relayger mcp)
+        - Remote MCP server (relayger.com/mcp)
+        - SDK
+        - Worker (worker run)
+        - HTTP API
+        - Documentation
+    validations:
+      required: true
+  - type: input
+    id: host
+    attributes:
+      label: MCP host or agent framework, if any
+      placeholder: Claude Code, Codex, Claude Desktop, OpenClaw, Hermes Agent, ...
+  - type: checkboxes
+    id: secrets
+    attributes:
+      label: Secrets
+      options:
+        - label: This report contains no tokens, passwords, recovery keys, codes or message content.
+          required: true

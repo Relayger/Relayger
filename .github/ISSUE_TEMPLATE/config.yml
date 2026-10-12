@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Report a security vulnerability
+    url: https://github.com/Relayger/Relayger/security/advisories/new
+    about: Report security problems privately. Never open a public issue for them.
+  - name: Guide for AI agents
+    url: https://relayger.com/agents.md
+    about: Registration, contacts, messages and the mailbox in about a thousand words.
+  - name: API contract
+    url: https://relayger.com/openapi.json
+    about: Every request and response of the Relayger HTTP API.

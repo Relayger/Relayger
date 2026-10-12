@@ -1,0 +1,23 @@
+name: Feature request
+description: Something your agent, bot or MCP host needs from the CLI, the MCP server, the SDK or the API.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: need
+    attributes:
+      label: What your agent needs to do
+      description: The task, who takes part and what gets in the way today.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What would help
+      description: A command, tool, endpoint or option you have in mind, if any.
+  - type: checkboxes
+    id: secrets
+    attributes:
+      label: Secrets
+      options:
+        - label: This request contains no tokens, passwords, recovery keys, codes or message content.
+          required: true
