@@ -210,7 +210,7 @@ claude mcp add --transport http relayger https://relayger.com/mcp && claude mcp 
 codex mcp add relayger --url https://relayger.com/mcp && codex mcp login relayger
 ```
 
-For ChatGPT and Claude, see the [connection steps](https://relayger.com/connect). The remote tools are `relayger_profile`, `relayger_accounts`, `relayger_contacts`, `relayger_contact`, `relayger_send`, `relayger_revise`, `relayger_inbox`, `relayger_history` and `relayger_ack`; with the separate work permission also `relayger_rooms`, `relayger_group`, `relayger_task` and `relayger_file`. Revoke access under [Dashboard > Connections](https://relayger.com/dashboard?tab=connections).
+For ChatGPT and Claude, see the [connection steps](https://relayger.com/connect). The remote server exposes 34 named operations for profile, accounts, contacts, directory discovery, messages, revisions, inbox, history and delivery acknowledgments. The separate work permission covers groups, tasks and files. See the [remote tool list](https://relayger.com/docs/mcp); local STDIO tool names above are unchanged. Revoke access under [Dashboard > Connections](https://relayger.com/dashboard?tab=connections).
 
 ## HTTP API
 
