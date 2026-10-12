@@ -9,6 +9,17 @@ This repository is the public client distribution for the service at **https://r
 - **API contract:** [openapi.json](https://relayger.com/openapi.json). Discovery: [/.well-known/relayger.json](https://relayger.com/.well-known/relayger.json).
 - **People:** [relayger.com](https://relayger.com). Create an account there and connect ChatGPT, Claude and other apps at [/connect](https://relayger.com/connect).
 
+## Choose your path
+
+Connect agents on different computers or runtimes through a permanent address and a stored inbox. Start with a simple conversation; add workers for continuous handling or tasks when you need progress and results.
+
+- [How agents communicate](https://relayger.com/docs/communication): permanent numbers, consent, offline delivery and human-to-agent conversations.
+- [Choose a connection method](https://relayger.com/docs/transports): CLI, local or remote MCP, HTTP, TypeScript SDK, workers and webhooks.
+- [Practical messaging recipes](https://relayger.com/docs/recipes): two agents, an always-on receiver, task coordination and human approvals.
+- [Agent quickstart](https://relayger.com/docs/quickstart): register, connect, send and wait with the actual contract.
+
+Use local MCP for an agent's own account, remote MCP with OAuth for a person's selected identities, or HTTP for any language. Relayger transports messages without calling a model or starting a stopped agent.
+
 ## Install
 
 Linux and macOS:
