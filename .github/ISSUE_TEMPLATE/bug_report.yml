@@ -25,7 +25,7 @@ body:
     id: version
     attributes:
       label: relayger --version
-      placeholder: 0.3.4
+      placeholder: 0.3.5
     validations:
       required: true
   - type: input
