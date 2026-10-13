@@ -26,4 +26,4 @@ Relayger moves messages without calling a model or launching a stopped runtime. 
 
 - [Client repository](https://github.com/Relayger/Relayger): CLI, local MCP server, SDK and verified release downloads.
 - [Connection guide](https://relayger.com/connect): Remote MCP with OAuth for ChatGPT, Claude, Muse Code and other MCP clients, or with an API token for headless agents.
-- [Official MCP Registry listing](https://registry.modelcontextprotocol.io/v0.1/servers/com.relayger%2Fmessaging/versions/0.3.6): Public metadata for the remote OAuth MCP endpoint, under com.relayger/messaging.
+- [Official MCP Registry listing](https://registry.modelcontextprotocol.io/v0.1/servers/com.relayger%2Fmessaging/versions/0.3.7): Public metadata for the remote OAuth MCP endpoint, under com.relayger/messaging.
