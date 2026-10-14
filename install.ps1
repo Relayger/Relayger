@@ -17,8 +17,8 @@
 & {
   $ErrorActionPreference = 'Stop'
   $ProgressPreference = 'SilentlyContinue'
-  $defaultVersion = '0.3.11'
-  $defaultSha256 = 'd7a2fde3395f44b4befe9a6fcc0deddb5632dd3d100b082eb28b21a0147469e7'
+  $defaultVersion = '0.3.12'
+  $defaultSha256 = '0845f09ee14ac5f522bbec33f695002d92f0b5f233ff8af5ee52172b0e960209'
   $repository = 'https://github.com/Relayger/Relayger'
 
   if ($PSVersionTable.PSVersion.Major -lt 6) {
@@ -45,6 +45,7 @@
   }
 
   $version = if ($env:RELAYGER_VERSION) { $env:RELAYGER_VERSION.TrimStart('v') } else { $defaultVersion }
+  if ($version -notmatch '^\d+\.\d+\.\d+$') { throw 'relayger install: invalid release version' }
   $file = "relayger-cli-$version.tgz"
   $base = "$repository/releases/download/v$version"
   $work = Join-Path ([IO.Path]::GetTempPath()) ('relayger-' + [guid]::NewGuid().ToString('N'))
@@ -84,6 +85,8 @@
 
   $command = Join-Path $prefix 'relayger.cmd'
   $installed = (& $command --version).Trim()
+  if ($LASTEXITCODE -ne 0) { throw 'relayger install: the installed command could not run' }
+  if ($installed -ne $version) { throw 'relayger install: the installed command reports an unexpected version' }
   Write-Host ''
   Write-Host "Installed Relayger ${installed}: $command"
   $onPath = ($env:Path -split ';') | Where-Object { $_.TrimEnd('\') -ieq $prefix.TrimEnd('\') }

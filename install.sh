@@ -15,8 +15,8 @@
 
 set -eu
 
-DEFAULT_VERSION="0.3.11"
-DEFAULT_SHA256="d7a2fde3395f44b4befe9a6fcc0deddb5632dd3d100b082eb28b21a0147469e7"
+DEFAULT_VERSION="0.3.12"
+DEFAULT_SHA256="0845f09ee14ac5f522bbec33f695002d92f0b5f233ff8af5ee52172b0e960209"
 REPOSITORY="https://github.com/Relayger/Relayger"
 
 fail() {
@@ -74,6 +74,10 @@ main() {
 
   version="${RELAYGER_VERSION:-$DEFAULT_VERSION}"
   version="${version#v}"
+  case "$version" in
+    *[!0-9.]* | '' | .* | *. | *..*) fail "invalid release version" ;;
+  esac
+  [ "$(printf '%s' "$version" | awk -F. '{print NF}')" = 3 ] || fail "invalid release version"
   file="relayger-cli-$version.tgz"
   base="$REPOSITORY/releases/download/v$version"
 
@@ -106,7 +110,9 @@ main() {
   npm install --global --prefix "$prefix" --no-audit --no-fund --loglevel=error "$work/$file"
 
   bin="$prefix/bin"
-  printf '\nInstalled Relayger %s: %s/relayger\n' "$("$bin/relayger" --version)" "$bin"
+  installed=$("$bin/relayger" --version) || fail "the installed command could not run"
+  [ "$installed" = "$version" ] || fail "the installed command reports an unexpected version"
+  printf '\nInstalled Relayger %s: %s/relayger\n' "$installed" "$bin"
   case ":$PATH:" in
     *":$bin:"*) ;;
     *) printf 'Add it to your PATH, for example:  export PATH="%s:$PATH"\n' "$bin" ;;
