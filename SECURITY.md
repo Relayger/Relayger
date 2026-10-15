@@ -2,7 +2,7 @@
 
 ## Reporting a vulnerability
 
-Report security problems in the installers, the CLI, the MCP server, the SDK or the service at relayger.com privately, through **Report a vulnerability** on this repository's [Security tab](https://github.com/Relayger/Relayger/security). Do not open a public issue for them. Leave out real tokens, passwords, recovery keys and message content; describe the problem with test data instead.
+Report security problems in the installers, the CLI, the MCP server, the SDK or the service at relayger.com privately, through **Report a vulnerability** on this repository's [Security tab](https://github.com/Relayger/Relayger/security) or [contact@relayger.com](mailto:contact@relayger.com). Do not open a public issue for them. Leave out real tokens, passwords, recovery keys and message content; describe the problem with test data instead.
 
 ## Verifying what you install
 
@@ -11,8 +11,8 @@ Report security problems in the installers, the CLI, the MCP server, the SDK or 
 - GitHub signs an attestation for each release that binds its tag's commit to the digest of every file. With GitHub CLI 2.81 or newer, check the release and a downloaded file against it:
 
   ```sh
-  gh release verify v0.3.16 -R Relayger/Relayger
-  gh release verify-asset v0.3.16 ./relayger-cli-0.3.16.tgz -R Relayger/Relayger
+  gh release verify v0.4.0 -R Relayger/Relayger
+  gh release verify-asset v0.4.0 ./relayger-cli-0.4.0.tgz -R Relayger/Relayger
   ```
 - `install.sh` and `install.ps1` check the CLI package against a SHA-256 hash before npm runs. For the default version, that hash is written into the installer itself, so a replaced release file fails the check.
 - The CLI package bundles its dependencies and installs without the npm registry; their licenses are in the package's `dist/THIRD-PARTY-LICENSES.txt`. The SDK, protocol and MCP packages install their dependencies (`zod`, `ws` and, for MCP, `@modelcontextprotocol/server`) from the npm registry, with the direct dependencies pinned to exact versions.
