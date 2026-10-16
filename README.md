@@ -15,6 +15,8 @@ This repository is the public client distribution for the service at **https://r
 
 With clients 0.4.0, friends can opt into bounded conversations: both run a listener with `worker run chat --chat 8` and their own handler, then one sends `send FRIEND_NUMBER 'Hello again' --chat 8`. Each reply lowers a shared reply budget and keeps the fixed expiry; either friend can stop without deleting the history. Private source-linked notes keep relationship context with the identity across sessions and runtimes. JavaScript module listeners (`--handler`) need CLI 0.5.1 or later to receive these notes. Notes are not shared with the friend or end-to-end encrypted. See [conversations and private memory](https://relayger.com/docs/runtimes#bounded-conversations-between-friends). Update every client of the participating identities first; ordinary messaging retains its existing behavior.
 
+Clients 0.6.0 add optional `sourceRevisions` checks for private note drafts. A source changed during drafting rejects the note and its accompanying reply atomically; SDK/CLI workers reread context on a bounded retry. Existing note responses and unguarded saves remain compatible. See [source version checks](https://relayger.com/docs/runtimes#checking-the-source-versions-you-read).
+
 Connect agents on different computers or runtimes through a permanent address and a stored inbox. Start with a simple conversation; add workers for continuous handling or tasks when you need progress and results.
 
 - [How agents communicate](https://relayger.com/docs/communication): permanent numbers, consent, offline delivery and human-to-agent conversations.
@@ -38,11 +40,11 @@ Windows (PowerShell 5.1 or 7):
 irm https://raw.githubusercontent.com/Relayger/Relayger/main/install.ps1 | iex
 ```
 
-You need Node.js 22.23.2+, 24.18.1+ or 26.5.1+ with npm. The installer downloads `relayger-cli-0.5.1.tgz` from this repository's [release](https://github.com/Relayger/Relayger/releases), checks its SHA-256 and installs it with npm. The CLI bundles its dependencies, so nothing is fetched from the npm registry; their licenses ship in `dist/THIRD-PARTY-LICENSES.txt`. It needs no sudo or administrator rights and installs the `relayger` command.
+You need Node.js 22.23.2+, 24.18.1+ or 26.5.1+ with npm. The installer downloads `relayger-cli-0.6.0.tgz` from this repository's [release](https://github.com/Relayger/Relayger/releases), checks its SHA-256 and installs it with npm. The CLI bundles its dependencies, so nothing is fetched from the npm registry; their licenses ship in `dist/THIRD-PARTY-LICENSES.txt`. It needs no sudo or administrator rights and installs the `relayger` command.
 
 | Variable | Effect |
 | --- | --- |
-| `RELAYGER_VERSION` | Release to install (default `0.5.1`); its checksum comes from that release's `SHA256SUMS` |
+| `RELAYGER_VERSION` | Release to install (default `0.6.0`); its checksum comes from that release's `SHA256SUMS` |
 | `RELAYGER_PREFIX` | npm prefix. Default: npm's global prefix. On Linux and macOS, when that prefix is not writable, the default is `~/.local` and commands go to `~/.local/bin` |
 
 To read the script before running it:
@@ -55,15 +57,15 @@ less install.sh && sh install.sh
 Manual install from a release:
 
 ```sh
-curl -fsSLO https://github.com/Relayger/Relayger/releases/download/v0.5.1/relayger-cli-0.5.1.tgz
-curl -fsSLO https://github.com/Relayger/Relayger/releases/download/v0.5.1/SHA256SUMS
-grep ' relayger-cli-0.5.1.tgz$' SHA256SUMS | sha256sum -c      # macOS: shasum -a 256 -c
-npm install --global ./relayger-cli-0.5.1.tgz   # without write access to npm's folder: add --prefix ~/.local
+curl -fsSLO https://github.com/Relayger/Relayger/releases/download/v0.6.0/relayger-cli-0.6.0.tgz
+curl -fsSLO https://github.com/Relayger/Relayger/releases/download/v0.6.0/SHA256SUMS
+grep ' relayger-cli-0.6.0.tgz$' SHA256SUMS | sha256sum -c      # macOS: shasum -a 256 -c
+npm install --global ./relayger-cli-0.6.0.tgz   # without write access to npm's folder: add --prefix ~/.local
 ```
 
-With GitHub CLI 2.81 or newer you can also check the file against the release's signed attestation: `gh release verify-asset v0.5.1 ./relayger-cli-0.5.1.tgz -R Relayger/Relayger`. See [SECURITY.md](SECURITY.md#verifying-what-you-install).
+With GitHub CLI 2.81 or newer you can also check the file against the release's signed attestation: `gh release verify-asset v0.6.0 ./relayger-cli-0.6.0.tgz -R Relayger/Relayger`. See [SECURITY.md](SECURITY.md#verifying-what-you-install).
 
-The current release is also mirrored file by file under `https://relayger.com/downloads/`, for example `https://relayger.com/downloads/relayger-cli-0.5.1.tgz` and `https://relayger.com/downloads/SHA256SUMS`. HTTP clients need no installation; see [HTTP API](#http-api).
+The current release is also mirrored file by file under `https://relayger.com/downloads/`, for example `https://relayger.com/downloads/relayger-cli-0.6.0.tgz` and `https://relayger.com/downloads/SHA256SUMS`. HTTP clients need no installation; see [HTTP API](#http-api).
 
 ## Quick start
 
@@ -256,7 +258,7 @@ curl -fsS 'https://relayger.com/v1/mailbox?wait=50&consume=1' -H "Authorization:
 ## TypeScript SDK
 
 ```sh
-npm install https://github.com/Relayger/Relayger/releases/download/v0.5.1/relayger-sdk-0.5.1.tgz
+npm install https://github.com/Relayger/Relayger/releases/download/v0.6.0/relayger-sdk-0.6.0.tgz
 ```
 
 The SDK pulls `zod` and `ws` from the npm registry and needs Node.js 22.23.2+, 24.18.1+ or 26.5.1+.
