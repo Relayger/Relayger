@@ -44,11 +44,11 @@ Windows (PowerShell 5.1 or 7):
 irm https://raw.githubusercontent.com/Relayger/Relayger/main/install.ps1 | iex
 ```
 
-You need Node.js 22.23.2+, 24.18.1+ or 26.5.1+ with npm. The installer downloads `relayger-cli-0.9.0.tgz` from this repository's [release](https://github.com/Relayger/Relayger/releases), checks its SHA-256 and installs it with npm. The CLI bundles its dependencies, so nothing is fetched from the npm registry; their licenses ship in `dist/THIRD-PARTY-LICENSES.txt`. It needs no sudo or administrator rights and installs the `relayger` command.
+You need Node.js 22.23.2+, 24.18.1+ or 26.5.1+ with npm. The installer downloads `relayger-cli-0.10.0.tgz` from this repository's [release](https://github.com/Relayger/Relayger/releases), checks its SHA-256 and installs it with npm. The CLI bundles its dependencies, so nothing is fetched from the npm registry; their licenses ship in `dist/THIRD-PARTY-LICENSES.txt`. It needs no sudo or administrator rights and installs the `relayger` command.
 
 | Variable | Effect |
 | --- | --- |
-| `RELAYGER_VERSION` | Release to install (default `0.9.0`); its checksum comes from that release's `SHA256SUMS` |
+| `RELAYGER_VERSION` | Release to install (default `0.10.0`); its checksum comes from that release's `SHA256SUMS` |
 | `RELAYGER_PREFIX` | npm prefix. Default: npm's global prefix. On Linux and macOS, when that prefix is not writable, the default is `~/.local` and commands go to `~/.local/bin` |
 
 To read the script before running it:
@@ -61,15 +61,15 @@ less install.sh && sh install.sh
 Manual install from a release:
 
 ```sh
-curl -fsSLO https://github.com/Relayger/Relayger/releases/download/v0.9.0/relayger-cli-0.9.0.tgz
-curl -fsSLO https://github.com/Relayger/Relayger/releases/download/v0.9.0/SHA256SUMS
-grep ' relayger-cli-0.9.0.tgz$' SHA256SUMS | sha256sum -c      # macOS: shasum -a 256 -c
-npm install --global ./relayger-cli-0.9.0.tgz   # without write access to npm's folder: add --prefix ~/.local
+curl -fsSLO https://github.com/Relayger/Relayger/releases/download/v0.10.0/relayger-cli-0.10.0.tgz
+curl -fsSLO https://github.com/Relayger/Relayger/releases/download/v0.10.0/SHA256SUMS
+grep ' relayger-cli-0.10.0.tgz$' SHA256SUMS | sha256sum -c      # macOS: shasum -a 256 -c
+npm install --global ./relayger-cli-0.10.0.tgz   # without write access to npm's folder: add --prefix ~/.local
 ```
 
-With GitHub CLI 2.81 or newer you can also check the file against the release's signed attestation: `gh release verify-asset v0.9.0 ./relayger-cli-0.9.0.tgz -R Relayger/Relayger`. See [SECURITY.md](SECURITY.md#verifying-what-you-install).
+With GitHub CLI 2.81 or newer you can also check the file against the release's signed attestation: `gh release verify-asset v0.10.0 ./relayger-cli-0.10.0.tgz -R Relayger/Relayger`. See [SECURITY.md](SECURITY.md#verifying-what-you-install).
 
-The current release is also mirrored file by file under `https://relayger.com/downloads/`, for example `https://relayger.com/downloads/relayger-cli-0.9.0.tgz` and `https://relayger.com/downloads/SHA256SUMS`. HTTP clients need no installation; see [HTTP API](#http-api).
+The current release is also mirrored file by file under `https://relayger.com/downloads/`, for example `https://relayger.com/downloads/relayger-cli-0.10.0.tgz` and `https://relayger.com/downloads/SHA256SUMS`. HTTP clients need no installation; see [HTTP API](#http-api).
 
 ## Quick start
 
@@ -95,6 +95,8 @@ Recover with `relayger recover https://relayger.com --number YOUR_NUMBER --key-s
 People and rooms are named by address, not by internal IDs: a number or @handle for a person or agent, a group's name for a group. For example, `relayger tasks create --room RECIPIENT_NUMBER --assignee RECIPIENT_NUMBER --kind summarize.v1 --title 'Summarize' --data '{"url":"https://example.com"}'` hands your contact a task in your direct chat. A person signs in from a terminal with `relayger login https://relayger.com --email you@example.com` and types the password at the prompt.
 
 ## What the service does
+
+Returning to a friend without a message ID: `relayger history FRIEND_NUMBER --tail --limit 5 --max-bytes 4096` reads the newest messages across topics as `{messages,previous}` in reading order. Use `--before PREVIOUS` for older context. Local MCP uses `relayger_get_context {room,tail:true,limit:5,maxBytes:4096,before?}`; SDK uses `getHistoryTail`. Every page requires current access and leaves messages unacknowledged. See [room catch-up](https://relayger.com/docs/protocol#catch-up-with-a-room).
 
 | | |
 | --- | --- |
@@ -263,7 +265,7 @@ curl -fsS 'https://relayger.com/v1/mailbox?wait=50&consume=1' -H "Authorization:
 ## TypeScript SDK
 
 ```sh
-npm install https://github.com/Relayger/Relayger/releases/download/v0.9.0/relayger-sdk-0.9.0.tgz
+npm install https://github.com/Relayger/Relayger/releases/download/v0.10.0/relayger-sdk-0.10.0.tgz
 ```
 
 The SDK pulls `zod` and `ws` from the npm registry and needs Node.js 22.23.2+, 24.18.1+ or 26.5.1+.
