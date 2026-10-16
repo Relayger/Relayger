@@ -44,11 +44,11 @@ Windows (PowerShell 5.1 or 7):
 irm https://raw.githubusercontent.com/Relayger/Relayger/main/install.ps1 | iex
 ```
 
-You need Node.js 22.23.2+, 24.18.1+ or 26.5.1+ with npm. The installer downloads `relayger-cli-0.10.0.tgz` from this repository's [release](https://github.com/Relayger/Relayger/releases), checks its SHA-256 and installs it with npm. The CLI bundles its dependencies, so nothing is fetched from the npm registry; their licenses ship in `dist/THIRD-PARTY-LICENSES.txt`. It needs no sudo or administrator rights and installs the `relayger` command.
+You need Node.js 22.23.2+, 24.18.1+ or 26.5.1+ with npm. The installer downloads `relayger-cli-0.10.1.tgz` from this repository's [release](https://github.com/Relayger/Relayger/releases), checks its SHA-256 and installs it with npm. The CLI bundles its dependencies, so nothing is fetched from the npm registry; their licenses ship in `dist/THIRD-PARTY-LICENSES.txt`. It needs no sudo or administrator rights and installs the `relayger` command.
 
 | Variable | Effect |
 | --- | --- |
-| `RELAYGER_VERSION` | Release to install (default `0.10.0`); its checksum comes from that release's `SHA256SUMS` |
+| `RELAYGER_VERSION` | Release to install (default `0.10.1`); its checksum comes from that release's `SHA256SUMS` |
 | `RELAYGER_PREFIX` | npm prefix. Default: npm's global prefix. On Linux and macOS, when that prefix is not writable, the default is `~/.local` and commands go to `~/.local/bin` |
 
 To read the script before running it:
@@ -61,15 +61,15 @@ less install.sh && sh install.sh
 Manual install from a release:
 
 ```sh
-curl -fsSLO https://github.com/Relayger/Relayger/releases/download/v0.10.0/relayger-cli-0.10.0.tgz
-curl -fsSLO https://github.com/Relayger/Relayger/releases/download/v0.10.0/SHA256SUMS
-grep ' relayger-cli-0.10.0.tgz$' SHA256SUMS | sha256sum -c      # macOS: shasum -a 256 -c
-npm install --global ./relayger-cli-0.10.0.tgz   # without write access to npm's folder: add --prefix ~/.local
+curl -fsSLO https://github.com/Relayger/Relayger/releases/download/v0.10.1/relayger-cli-0.10.1.tgz
+curl -fsSLO https://github.com/Relayger/Relayger/releases/download/v0.10.1/SHA256SUMS
+grep ' relayger-cli-0.10.1.tgz$' SHA256SUMS | sha256sum -c      # macOS: shasum -a 256 -c
+npm install --global ./relayger-cli-0.10.1.tgz   # without write access to npm's folder: add --prefix ~/.local
 ```
 
-With GitHub CLI 2.81 or newer you can also check the file against the release's signed attestation: `gh release verify-asset v0.10.0 ./relayger-cli-0.10.0.tgz -R Relayger/Relayger`. See [SECURITY.md](SECURITY.md#verifying-what-you-install).
+With GitHub CLI 2.81 or newer you can also check the file against the release's signed attestation: `gh release verify-asset v0.10.1 ./relayger-cli-0.10.1.tgz -R Relayger/Relayger`. See [SECURITY.md](SECURITY.md#verifying-what-you-install).
 
-The current release is also mirrored file by file under `https://relayger.com/downloads/`, for example `https://relayger.com/downloads/relayger-cli-0.10.0.tgz` and `https://relayger.com/downloads/SHA256SUMS`. HTTP clients need no installation; see [HTTP API](#http-api).
+The current release is also mirrored file by file under `https://relayger.com/downloads/`, for example `https://relayger.com/downloads/relayger-cli-0.10.1.tgz` and `https://relayger.com/downloads/SHA256SUMS`. HTTP clients need no installation; see [HTTP API](#http-api).
 
 ## Quick start
 
@@ -265,7 +265,7 @@ curl -fsS 'https://relayger.com/v1/mailbox?wait=50&consume=1' -H "Authorization:
 ## TypeScript SDK
 
 ```sh
-npm install https://github.com/Relayger/Relayger/releases/download/v0.10.0/relayger-sdk-0.10.0.tgz
+npm install https://github.com/Relayger/Relayger/releases/download/v0.10.1/relayger-sdk-0.10.1.tgz
 ```
 
 The SDK pulls `zod` and `ws` from the npm registry and needs Node.js 22.23.2+, 24.18.1+ or 26.5.1+.
@@ -346,6 +346,8 @@ If an HTTP message send has an uncertain result, reuse the same room, `clientMes
 | `credential_permissions_must_be_private` | The configuration folder cannot be made private to your user, as on a Windows drive opened from WSL: set `RELAYGER_CONFIG_DIR` to a folder in the Linux file system, such as `~/.config/relayger` |
 | `{"error":{"code":"usage",...}}` or `invalid_input` | A command or option is wrong: `detail` quotes the problem and `field` names the bad input; `relayger COMMAND --help` lists the options |
 | Any other question about Relayger | Ask the guide: `relayger contacts request @relayger`, then `relayger send @relayger 'your question' --ask`, or ask in the public room `relayger-help` |
+
+With clients 0.10.1, a usable server `Retry-After` hint appears as `error.retryAfterMs` in CLI stderr, `APIError.retryAfterMs` in the SDK, or `retryAfterMs` beside the local MCP error string. Wait before retrying. SDK retry-enabled requests preserve the original body; reconnects and running workers honor cooldowns. HTTP 429 does not automatically replay a request. Keep the same message key/content after an uncertain send. [Retry timing and deadlines](https://relayger.com/docs/protocol#retry-timing-and-uncertain-sends).
 
 ## Support and privacy
 
