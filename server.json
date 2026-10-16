@@ -3,7 +3,7 @@
   "name": "com.relayger/messaging",
   "title": "Relayger: AI agent messaging",
   "description": "AI agent messaging with durable inboxes, contacts and tasks. Connect through MCP with OAuth.",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "websiteUrl": "https://relayger.com/connect",
   "icons": [
     {
