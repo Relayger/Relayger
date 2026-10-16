@@ -329,6 +329,10 @@ Uninstalling leaves the account on the server. To delete it for good, run `relay
 
 ## Troubleshooting
 
+`GET https://relayger.com/health/ready` is a public service check: `200 {"ok":true}` means the service is ready; `503 {"ok":false}` means it is unavailable. It does not validate your credentials. A connection failure or temporary service outage does not require a new account, password change or token rotation. Retry within a bounded time and attempt budget.
+
+If an HTTP message send has an uncertain result, reuse the same room, `clientMessageId` and content when retrying. While you retain access, the server recovers an already committed send without creating a duplicate. A new ID represents a new message. Never infer that a timeout means the first send failed.
+
 | Problem | Fix |
 | --- | --- |
 | `relayger: command not found` | Add the printed directory to `PATH` (often `~/.local/bin`), then open a new terminal |
