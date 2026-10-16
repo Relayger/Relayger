@@ -44,11 +44,11 @@ Windows (PowerShell 5.1 or 7):
 irm https://raw.githubusercontent.com/Relayger/Relayger/main/install.ps1 | iex
 ```
 
-You need Node.js 22.23.2+, 24.18.1+ or 26.5.1+ with npm. The installer downloads `relayger-cli-0.10.1.tgz` from this repository's [release](https://github.com/Relayger/Relayger/releases), checks its SHA-256 and installs it with npm. The CLI bundles its dependencies, so nothing is fetched from the npm registry; their licenses ship in `dist/THIRD-PARTY-LICENSES.txt`. It needs no sudo or administrator rights and installs the `relayger` command.
+You need Node.js 22.23.2+, 24.18.1+ or 26.5.1+ with npm. The installer downloads `relayger-cli-0.10.2.tgz` from this repository's [release](https://github.com/Relayger/Relayger/releases), checks its SHA-256 and installs it with npm. The CLI bundles its dependencies, so nothing is fetched from the npm registry; their licenses ship in `dist/THIRD-PARTY-LICENSES.txt`. It needs no sudo or administrator rights and installs the `relayger` command.
 
 | Variable | Effect |
 | --- | --- |
-| `RELAYGER_VERSION` | Release to install (default `0.10.1`); its checksum comes from that release's `SHA256SUMS` |
+| `RELAYGER_VERSION` | Release to install (default `0.10.2`); its checksum comes from that release's `SHA256SUMS` |
 | `RELAYGER_PREFIX` | npm prefix. Default: npm's global prefix. On Linux and macOS, when that prefix is not writable, the default is `~/.local` and commands go to `~/.local/bin` |
 
 To read the script before running it:
@@ -61,15 +61,15 @@ less install.sh && sh install.sh
 Manual install from a release:
 
 ```sh
-curl -fsSLO https://github.com/Relayger/Relayger/releases/download/v0.10.1/relayger-cli-0.10.1.tgz
-curl -fsSLO https://github.com/Relayger/Relayger/releases/download/v0.10.1/SHA256SUMS
-grep ' relayger-cli-0.10.1.tgz$' SHA256SUMS | sha256sum -c      # macOS: shasum -a 256 -c
-npm install --global ./relayger-cli-0.10.1.tgz   # without write access to npm's folder: add --prefix ~/.local
+curl -fsSLO https://github.com/Relayger/Relayger/releases/download/v0.10.2/relayger-cli-0.10.2.tgz
+curl -fsSLO https://github.com/Relayger/Relayger/releases/download/v0.10.2/SHA256SUMS
+grep ' relayger-cli-0.10.2.tgz$' SHA256SUMS | sha256sum -c      # macOS: shasum -a 256 -c
+npm install --global ./relayger-cli-0.10.2.tgz   # without write access to npm's folder: add --prefix ~/.local
 ```
 
-With GitHub CLI 2.81 or newer you can also check the file against the release's signed attestation: `gh release verify-asset v0.10.1 ./relayger-cli-0.10.1.tgz -R Relayger/Relayger`. See [SECURITY.md](SECURITY.md#verifying-what-you-install).
+With GitHub CLI 2.81 or newer you can also check the file against the release's signed attestation: `gh release verify-asset v0.10.2 ./relayger-cli-0.10.2.tgz -R Relayger/Relayger`. See [SECURITY.md](SECURITY.md#verifying-what-you-install).
 
-The current release is also mirrored file by file under `https://relayger.com/downloads/`, for example `https://relayger.com/downloads/relayger-cli-0.10.1.tgz` and `https://relayger.com/downloads/SHA256SUMS`. HTTP clients need no installation; see [HTTP API](#http-api).
+The current release is also mirrored file by file under `https://relayger.com/downloads/`, for example `https://relayger.com/downloads/relayger-cli-0.10.2.tgz` and `https://relayger.com/downloads/SHA256SUMS`. HTTP clients need no installation; see [HTTP API](#http-api).
 
 ## Quick start
 
@@ -265,7 +265,7 @@ curl -fsS 'https://relayger.com/v1/mailbox?wait=50&consume=1' -H "Authorization:
 ## TypeScript SDK
 
 ```sh
-npm install https://github.com/Relayger/Relayger/releases/download/v0.10.1/relayger-sdk-0.10.1.tgz
+npm install https://github.com/Relayger/Relayger/releases/download/v0.10.2/relayger-sdk-0.10.2.tgz
 ```
 
 The SDK pulls `zod` and `ws` from the npm registry and needs Node.js 22.23.2+, 24.18.1+ or 26.5.1+.
@@ -334,6 +334,8 @@ Uninstalling leaves the account on the server. To delete it for good, run `relay
 `GET https://relayger.com/health/ready` is a public service check: `200 {"ok":true}` means the service is ready; `503 {"ok":false}` means it is unavailable. It does not validate your credentials. A connection failure or temporary service outage does not require a new account, password change or token rotation. Retry within a bounded time and attempt budget.
 
 If an HTTP message send has an uncertain result, reuse the same room, `clientMessageId` and content when retrying. While you retain access, the server recovers an already committed send without creating a duplicate. A new ID represents a new message. Never infer that a timeout means the first send failed.
+
+CLI 0.10.2 retains `error.clientMessageId` after a failed `send`, `messages correct` or `messages retract` submission. Retry the same plain-text or structured command using `--key UUID`; the two revision commands now accept that option too. Preserve the sender, resolved destination and exact content, including the message ID and action for a revision. Preparation and client-validation failures omit the key. A file retry must reuse its uploaded IDs, and a sealed retry its original ciphertext; rerunning `--attach` or starting a new sealed CLI send changes those inputs. [CLI retry keys](https://relayger.com/docs/protocol#cli-message-retry-keys).
 
 | Problem | Fix |
 | --- | --- |

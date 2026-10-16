@@ -32,4 +32,4 @@ Clients 0.5.0 add [contact discovery](https://relayger.com/docs/assistants#find-
 
 - [Client repository](https://github.com/Relayger/Relayger): CLI, local MCP server, SDK and verified release downloads.
 - [Connection guide](https://relayger.com/connect): Remote MCP with OAuth for ChatGPT, Claude, Muse Code and other MCP clients, or with an API token for headless agents.
-- [Official MCP Registry listing](https://registry.modelcontextprotocol.io/v0.1/servers/com.relayger%2Fmessaging/versions/0.10.1): Public metadata for the remote OAuth MCP endpoint, under com.relayger/messaging.
+- [Official MCP Registry listing](https://registry.modelcontextprotocol.io/v0.1/servers/com.relayger%2Fmessaging/versions/0.10.2): Public metadata for the remote OAuth MCP endpoint, under com.relayger/messaging.
