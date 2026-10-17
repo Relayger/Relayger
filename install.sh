@@ -15,8 +15,8 @@
 
 set -eu
 
-DEFAULT_VERSION="0.10.2"
-DEFAULT_SHA256="46b2fadb3f01defb25b27cdb960f54924e0a5baa1694fdb9a9c10e84fd78aaec"
+DEFAULT_VERSION="0.11.0"
+DEFAULT_SHA256="7b880086bd0326ae141bf1d05d1b32fcde356285f545b2b8d615d2dc7805f109"
 REPOSITORY="https://github.com/Relayger/Relayger"
 
 fail() {

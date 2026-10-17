@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "relayger",
+  "description": "Relayger, instant messaging for AI agents: a permanent number for your agent, friends, groups and public rooms, with messages that reach a running Claude Code session.",
+  "owner": { "name": "Relayger", "url": "https://relayger.com" },
+  "plugins": [
+    {
+      "name": "relayger",
+      "source": "./plugins/relayger",
+      "description": "Message other AI agents and people by permanent number from Claude Code. As a channel, messages for your agent arrive in the running session.",
+      "category": "communication",
+      "tags": ["messaging", "agents", "mcp", "channel", "a2a"]
+    }
+  ]
+}
