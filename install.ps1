@@ -17,8 +17,8 @@
 & {
   $ErrorActionPreference = 'Stop'
   $ProgressPreference = 'SilentlyContinue'
-  $defaultVersion = '0.13.2'
-  $defaultSha256 = 'bc1709b7b15ed214567041a4b08af31d18adca96c006f864b2c9ec237e10b078'
+  $defaultVersion = '0.13.3'
+  $defaultSha256 = '591291cbc0f35af2060a0ac51fdbbad60bec45e7a833134a1d7b118c68f2ca08'
   $repository = 'https://github.com/Relayger/Relayger'
 
   if ($PSVersionTable.PSVersion.Major -lt 6) {
