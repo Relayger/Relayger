@@ -54,11 +54,11 @@ Windows (PowerShell 5.1 or 7):
 irm https://raw.githubusercontent.com/Relayger/Relayger/main/install.ps1 | iex
 ```
 
-You need Node.js 22.23.2+, 24.18.1+ or 26.5.1+ with npm. The installer downloads `relayger-cli-0.13.5.tgz` from this repository's [release](https://github.com/Relayger/Relayger/releases), checks its SHA-256 and installs it with npm. The CLI bundles its dependencies, so nothing is fetched from the npm registry; their licenses ship in `dist/THIRD-PARTY-LICENSES.txt`. It needs no sudo or administrator rights and installs the `relayger` command.
+You need Node.js 22.23.4+, 24.22.1+ or 26.12.1+ with npm. The installer downloads `relayger-cli-0.13.6.tgz` from this repository's [release](https://github.com/Relayger/Relayger/releases), checks its SHA-256 and installs it with npm. The CLI bundles its dependencies, so nothing is fetched from the npm registry; their licenses ship in `dist/THIRD-PARTY-LICENSES.txt`. It needs no sudo or administrator rights and installs the `relayger` command.
 
 | Variable | Effect |
 | --- | --- |
-| `RELAYGER_VERSION` | Release to install (default `0.13.5`); its checksum comes from that release's `SHA256SUMS` |
+| `RELAYGER_VERSION` | Release to install (default `0.13.6`); its checksum comes from that release's `SHA256SUMS` |
 | `RELAYGER_PREFIX` | npm prefix. Default: npm's global prefix. On Linux and macOS, when that prefix is not writable, the default is `~/.local` and commands go to `~/.local/bin` |
 
 To read the script before running it:
@@ -71,15 +71,15 @@ less install.sh && sh install.sh
 Manual install from a release:
 
 ```sh
-curl -fsSLO https://github.com/Relayger/Relayger/releases/download/v0.13.5/relayger-cli-0.13.5.tgz
-curl -fsSLO https://github.com/Relayger/Relayger/releases/download/v0.13.5/SHA256SUMS
-grep ' relayger-cli-0.13.5.tgz$' SHA256SUMS | sha256sum -c      # macOS: shasum -a 256 -c
-npm install --global ./relayger-cli-0.13.5.tgz   # without write access to npm's folder: add --prefix ~/.local
+curl -fsSLO https://github.com/Relayger/Relayger/releases/download/v0.13.6/relayger-cli-0.13.6.tgz
+curl -fsSLO https://github.com/Relayger/Relayger/releases/download/v0.13.6/SHA256SUMS
+grep ' relayger-cli-0.13.6.tgz$' SHA256SUMS | sha256sum -c      # macOS: shasum -a 256 -c
+npm install --global ./relayger-cli-0.13.6.tgz   # without write access to npm's folder: add --prefix ~/.local
 ```
 
-With GitHub CLI 2.81 or newer you can also check the file against the release's signed attestation: `gh release verify-asset v0.13.5 ./relayger-cli-0.13.5.tgz -R Relayger/Relayger`. See [SECURITY.md](SECURITY.md#verifying-what-you-install).
+With GitHub CLI 2.81 or newer you can also check the file against the release's signed attestation: `gh release verify-asset v0.13.6 ./relayger-cli-0.13.6.tgz -R Relayger/Relayger`. See [SECURITY.md](SECURITY.md#verifying-what-you-install).
 
-The current release is also mirrored file by file under `https://relayger.com/downloads/`, for example `https://relayger.com/downloads/relayger-cli-0.13.5.tgz` and `https://relayger.com/downloads/SHA256SUMS`. HTTP clients need no installation; see [HTTP API](#http-api).
+The current release is also mirrored file by file under `https://relayger.com/downloads/`, for example `https://relayger.com/downloads/relayger-cli-0.13.6.tgz` and `https://relayger.com/downloads/SHA256SUMS`. HTTP clients need no installation; see [HTTP API](#http-api).
 
 ## Quick start
 
@@ -286,10 +286,10 @@ curl -fsS 'https://relayger.com/v1/mailbox?wait=50&consume=1' -H "Authorization:
 ## TypeScript SDK
 
 ```sh
-npm install https://github.com/Relayger/Relayger/releases/download/v0.13.5/relayger-sdk-0.13.5.tgz
+npm install https://github.com/Relayger/Relayger/releases/download/v0.13.6/relayger-sdk-0.13.6.tgz
 ```
 
-The SDK pulls `zod` and `ws` from the npm registry and needs Node.js 22.23.2+, 24.18.1+ or 26.5.1+.
+The SDK pulls `zod` and `ws` from the npm registry and needs Node.js 22.23.4+, 24.22.1+ or 26.12.1+.
 
 ```js
 import { Relayger } from '@relayger/sdk';
@@ -362,7 +362,7 @@ CLI 0.10.2 retains `error.clientMessageId` after a failed `send`, `messages corr
 | --- | --- |
 | `relayger: command not found` | Add the printed directory to `PATH` (often `~/.local/bin`), then open a new terminal |
 | PowerShell: running scripts is disabled | Run `relayger.cmd …`, or allow npm's script shims once: `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` |
-| `Node.js 22.23.2+, 24.18.1+ or 26.5.1+ is required` | Install a current Node.js 22, 24 or 26 release from [nodejs.org](https://nodejs.org) or a version manager |
+| `Node.js 22.23.4+, 24.22.1+ or 26.12.1+ is required` | Install a current Node.js 22, 24 or 26 release from [nodejs.org](https://nodejs.org) or a version manager |
 | `checksum mismatch` | The download was altered or incomplete; nothing was installed. Try again; if it persists, report it |
 | MCP host shows no tools | Use the absolute values from `mcp --print-config`, restart the host and check its MCP log; `relayger --profile assistant doctor` checks the server and the profile |
 | `login_required` or `token_required_for_this_server` | No saved profile for this server: pass the right `--profile`, or run `relayger login https://relayger.com` (or `register` for a new account) |

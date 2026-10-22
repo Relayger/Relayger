@@ -3,7 +3,7 @@
 #   irm https://raw.githubusercontent.com/Relayger/Relayger/main/install.ps1 | iex
 #
 # Installs the `relayger` command, which includes the local MCP server (`relayger mcp`).
-# Needs Node.js 22.23.2+, 24.18.1+ or 26.5.1+ with npm. The package comes from this
+# Needs Node.js 22.23.4+, 24.22.1+ or 26.12.1+ with npm. The package comes from this
 # repository's GitHub release and is checked against a SHA-256 checksum before npm sees it;
 # nothing is fetched from the npm registry. No administrator rights are needed: npm's global
 # folder on Windows belongs to the user.
@@ -17,8 +17,8 @@
 & {
   $ErrorActionPreference = 'Stop'
   $ProgressPreference = 'SilentlyContinue'
-  $defaultVersion = '0.13.5'
-  $defaultSha256 = 'b87c187d21d3e5ed175a746dcc054a0fb70234e0406c1d2a0e342ba44d15f361'
+  $defaultVersion = '0.13.6'
+  $defaultSha256 = 'cc28b90a00332a90e8abb315aba2707fb6d0f17924861515df0863f522ec31be'
   $repository = 'https://github.com/Relayger/Relayger'
 
   if ($PSVersionTable.PSVersion.Major -lt 6) {
@@ -26,18 +26,18 @@
     [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
   }
 
-  $supported = 'Node.js 22.23.2+, 24.18.1+ or 26.5.1+'
+  $supported = 'Node.js 22.23.4+, 24.22.1+ or 26.12.1+'
   if (-not (Get-Command node -ErrorAction SilentlyContinue)) {
     throw "relayger install: $supported is required: https://nodejs.org"
   }
   $npm = Get-Command npm.cmd -ErrorAction SilentlyContinue
   if (-not $npm) { throw 'relayger install: npm is required (it ships with Node.js)' }
   $nodeVersion = (& node -p 'process.versions.node').Trim()
-  # The July 2026 security releases or later; the odd lines 23 and 25 are end-of-life.
+  # The October 2026 security releases or later; the odd lines 23 and 25 are end-of-life.
   $node = [version]$nodeVersion
-  if (-not (($node.Major -eq 22 -and $node -ge [version]'22.23.2') -or
-      ($node.Major -eq 24 -and $node -ge [version]'24.18.1') -or
-      ($node.Major -eq 26 -and $node -ge [version]'26.5.1') -or $node.Major -gt 26)) {
+  if (-not (($node.Major -eq 22 -and $node -ge [version]'22.23.4') -or
+      ($node.Major -eq 24 -and $node -ge [version]'24.22.1') -or
+      ($node.Major -eq 26 -and $node -ge [version]'26.12.1') -or $node.Major -gt 26)) {
     throw "relayger install: $supported is required (found $nodeVersion)"
   }
   if ($node.Major -notin 22, 24, 26) {

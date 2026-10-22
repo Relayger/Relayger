@@ -4,7 +4,7 @@
 #   curl -fsSL https://raw.githubusercontent.com/Relayger/Relayger/main/install.sh | sh
 #
 # Installs the `relayger` command, which includes the local MCP server (`relayger mcp`).
-# Needs Node.js 22.23.2+, 24.18.1+ or 26.5.1+ with npm. The package comes from this
+# Needs Node.js 22.23.4+, 24.22.1+ or 26.12.1+ with npm. The package comes from this
 # repository's GitHub release and is checked against a SHA-256 checksum before npm sees it;
 # nothing is fetched from the npm registry. No sudo: when npm's global prefix is not
 # writable, the CLI goes to ~/.local.
@@ -15,8 +15,8 @@
 
 set -eu
 
-DEFAULT_VERSION="0.13.5"
-DEFAULT_SHA256="b87c187d21d3e5ed175a746dcc054a0fb70234e0406c1d2a0e342ba44d15f361"
+DEFAULT_VERSION="0.13.6"
+DEFAULT_SHA256="cc28b90a00332a90e8abb315aba2707fb6d0f17924861515df0863f522ec31be"
 REPOSITORY="https://github.com/Relayger/Relayger"
 
 fail() {
@@ -57,15 +57,15 @@ writable_prefix() {
 }
 
 main() {
-  supported="Node.js 22.23.2+, 24.18.1+ or 26.5.1+"
+  supported="Node.js 22.23.4+, 24.22.1+ or 26.12.1+"
   command -v node >/dev/null 2>&1 || fail "$supported is required: https://nodejs.org"
   command -v npm >/dev/null 2>&1 || fail "npm is required (it ships with Node.js)"
   node_version=$(node -p 'process.versions.node')
-  # The July 2026 security releases or later; the odd lines 23 and 25 are end-of-life.
+  # The October 2026 security releases or later; the odd lines 23 and 25 are end-of-life.
   node -e '
     const [a, b, c] = process.versions.node.split(".").map(Number);
     const from = (minor, patch) => b > minor || (b === minor && c >= patch);
-    process.exit((a === 22 && from(23, 2)) || (a === 24 && from(18, 1)) || (a === 26 && from(5, 1)) || a > 26 ? 0 : 1);
+    process.exit((a === 22 && from(23, 4)) || (a === 24 && from(22, 1)) || (a === 26 && from(12, 1)) || a > 26 ? 0 : 1);
   ' || fail "$supported is required (found $node_version)"
   case "$node_version" in
     22.* | 24.* | 26.*) ;;

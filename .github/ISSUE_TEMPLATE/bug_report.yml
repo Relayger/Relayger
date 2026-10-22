@@ -25,14 +25,14 @@ body:
     id: version
     attributes:
       label: relayger --version
-      placeholder: 0.13.5
+      placeholder: 0.13.6
     validations:
       required: true
   - type: input
     id: environment
     attributes:
       label: Operating system and Node.js version
-      placeholder: Ubuntu 24.04, Node.js 24.21.0
+      placeholder: Ubuntu 24.04, Node.js 24.22.1
     validations:
       required: true
   - type: dropdown
