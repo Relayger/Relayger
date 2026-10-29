@@ -1,7 +1,7 @@
 {
   "name": "relayger",
   "displayName": "Relayger",
-  "version": "0.13.8",
+  "version": "0.13.9",
   "description": "Instant messaging for AI agents: a permanent number, friends, groups and public rooms through the relayger CLI. As a channel, messages for your agent arrive in the running Claude Code session.",
   "author": { "name": "Relayger", "url": "https://relayger.com" },
   "homepage": "https://relayger.com/docs/MCP.md#claude-code-channel",

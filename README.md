@@ -54,11 +54,11 @@ Windows (PowerShell 5.1 or 7):
 irm https://raw.githubusercontent.com/Relayger/Relayger/main/install.ps1 | iex
 ```
 
-You need Node.js 22.23.4+, 24.22.1+ or 26.12.1+ with npm. The installer downloads `relayger-cli-0.13.8.tgz` from this repository's [release](https://github.com/Relayger/Relayger/releases), checks its SHA-256 and installs it with npm. The CLI bundles its dependencies, so nothing is fetched from the npm registry; their licenses ship in `dist/THIRD-PARTY-LICENSES.txt`. It needs no sudo or administrator rights and installs the `relayger` command.
+You need Node.js 22.23.4+, 24.22.1+ or 26.12.1+ with npm. The installer downloads `relayger-cli-0.13.9.tgz` from this repository's [release](https://github.com/Relayger/Relayger/releases), checks its SHA-256 and installs it with npm. The CLI bundles its dependencies, so nothing is fetched from the npm registry; their licenses ship in `dist/THIRD-PARTY-LICENSES.txt`. It needs no sudo or administrator rights and installs the `relayger` command.
 
 | Variable | Effect |
 | --- | --- |
-| `RELAYGER_VERSION` | Release to install (default `0.13.8`); its checksum comes from that release's `SHA256SUMS` |
+| `RELAYGER_VERSION` | Release to install (default `0.13.9`); its checksum comes from that release's `SHA256SUMS` |
 | `RELAYGER_PREFIX` | npm prefix. Default: npm's global prefix. On Linux and macOS, when that prefix is not writable, the default is `~/.local` and commands go to `~/.local/bin` |
 
 To read the script before running it:
@@ -71,15 +71,15 @@ less install.sh && sh install.sh
 Manual install from a release:
 
 ```sh
-curl -fsSLO https://github.com/Relayger/Relayger/releases/download/v0.13.8/relayger-cli-0.13.8.tgz
-curl -fsSLO https://github.com/Relayger/Relayger/releases/download/v0.13.8/SHA256SUMS
-grep ' relayger-cli-0.13.8.tgz$' SHA256SUMS | sha256sum -c      # macOS: shasum -a 256 -c
-npm install --global ./relayger-cli-0.13.8.tgz   # without write access to npm's folder: add --prefix ~/.local
+curl -fsSLO https://github.com/Relayger/Relayger/releases/download/v0.13.9/relayger-cli-0.13.9.tgz
+curl -fsSLO https://github.com/Relayger/Relayger/releases/download/v0.13.9/SHA256SUMS
+grep ' relayger-cli-0.13.9.tgz$' SHA256SUMS | sha256sum -c      # macOS: shasum -a 256 -c
+npm install --global ./relayger-cli-0.13.9.tgz   # without write access to npm's folder: add --prefix ~/.local
 ```
 
-With GitHub CLI 2.81 or newer you can also check the file against the release's signed attestation: `gh release verify-asset v0.13.8 ./relayger-cli-0.13.8.tgz -R Relayger/Relayger`. See [SECURITY.md](SECURITY.md#verifying-what-you-install).
+With GitHub CLI 2.81 or newer you can also check the file against the release's signed attestation: `gh release verify-asset v0.13.9 ./relayger-cli-0.13.9.tgz -R Relayger/Relayger`. See [SECURITY.md](SECURITY.md#verifying-what-you-install).
 
-The current release is also mirrored file by file under `https://relayger.com/downloads/`, for example `https://relayger.com/downloads/relayger-cli-0.13.8.tgz` and `https://relayger.com/downloads/SHA256SUMS`. HTTP clients need no installation; see [HTTP API](#http-api).
+The current release is also mirrored file by file under `https://relayger.com/downloads/`, for example `https://relayger.com/downloads/relayger-cli-0.13.9.tgz` and `https://relayger.com/downloads/SHA256SUMS`. HTTP clients need no installation; see [HTTP API](#http-api).
 
 ## Quick start
 
@@ -286,7 +286,7 @@ curl -fsS 'https://relayger.com/v1/mailbox?wait=50&consume=1' -H "Authorization:
 ## TypeScript SDK
 
 ```sh
-npm install https://github.com/Relayger/Relayger/releases/download/v0.13.8/relayger-sdk-0.13.8.tgz
+npm install https://github.com/Relayger/Relayger/releases/download/v0.13.9/relayger-sdk-0.13.9.tgz
 ```
 
 The SDK pulls `zod` and `ws` from the npm registry and needs Node.js 22.23.4+, 24.22.1+ or 26.12.1+.
@@ -339,7 +339,7 @@ Report vulnerabilities privately as described in [SECURITY.md](SECURITY.md).
 
 ## Update and uninstall
 
-Run the installer again to update; it replaces the installed version. To uninstall:
+`relayger update` installs the release the server ships, checked against its `SHA256SUMS`, in the same place (`relayger update --check` only reports; `relayger doctor` shows `client.updateAvailable`). In an interactive terminal the CLI mentions a newer release after a command, checking at most once a day; scripts, agents and `RELAYGER_NO_UPDATE_CHECK=1` never see it. Running the installer again also updates. To uninstall:
 
 ```sh
 npm uninstall --global @relayger/cli                       # add --prefix ~/.local if it was installed there
