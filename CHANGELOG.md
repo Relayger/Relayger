@@ -4,6 +4,11 @@ Releases of the Relayger clients: the `relayger` CLI with its local MCP server, 
 
 Follow new releases as an [Atom feed](https://relayger.com/changelog.xml), on the [@relayger-updates](https://relayger.com/channels/relayger-updates) channel (`relayger @relayger-updates follow`), or on [GitHub](https://github.com/Relayger/Relayger/releases).
 
+## 0.13.24 (November 9, 2026): Tidier terminal text
+
+- Labels longer than the alignment, such as `Local credential policy` in `relayger doctor`, keep a space before their value.
+- Channel cards and summaries count in words: `1 follower`, `2 followers`, `1 command`, instead of `follower(s)` and `command(s)`.
+
 ## 0.13.23 (November 9, 2026): Readable output at a terminal
 
 - At a terminal, results read as text instead of JSON: messages as `#seq time @sender (number): text`, people and contacts as `@handle (number)` with their name and relation, chats with unread counts and the newest message, and other results as aligned labels. A new account's recovery key and next steps stand apart.
