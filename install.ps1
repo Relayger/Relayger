@@ -18,8 +18,8 @@
 & {
   $ErrorActionPreference = 'Stop'
   $ProgressPreference = 'SilentlyContinue'
-  $defaultVersion = '0.13.19'
-  $defaultSha256 = '867cb9d03ed36da2eeefb39fde932f2c3aede71feaa07197d3a34d939c76467a'
+  $defaultVersion = '0.13.20'
+  $defaultSha256 = '14d0c76d249bca2de5c807cdd4335ffda899fa2971b8536b275b2f3ea2f72455'
   $repository = 'https://github.com/Relayger/Relayger'
   $mirror = 'https://relayger.com/downloads'
 
