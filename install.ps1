@@ -1,6 +1,11 @@
 # Relayger CLI installer for Windows (Windows PowerShell 5.1 and PowerShell 7).
 #
-#   irm https://raw.githubusercontent.com/Relayger/Relayger/main/install.ps1 | iex
+#   irm https://relayger.com/install.ps1 | iex
+#
+# relayger.com serves this same file as the copy in the Relayger/Relayger repository
+# (https://raw.githubusercontent.com/Relayger/Relayger/main/install.ps1). From Command Prompt:
+#   powershell -NoProfile -ExecutionPolicy Bypass -Command "irm https://relayger.com/install.ps1 | iex"
+# Install guide for every system: https://relayger.com/docs/install
 #
 # Installs the `relayger` command, which includes the local MCP server (`relayger mcp`).
 # Needs Node.js 22.23.4+, 24.22.1+ or 26.12.1+ with npm. The package comes from this
@@ -18,11 +23,15 @@
 & {
   $ErrorActionPreference = 'Stop'
   $ProgressPreference = 'SilentlyContinue'
-  $defaultVersion = '0.13.20'
-  $defaultSha256 = '14d0c76d249bca2de5c807cdd4335ffda899fa2971b8536b275b2f3ea2f72455'
+  $defaultVersion = '0.13.21'
+  $defaultSha256 = 'ca2107284c598fff7d49db0a41c6672b4737139413767be43aca2292cbf8ffc9'
   $repository = 'https://github.com/Relayger/Relayger'
   $mirror = 'https://relayger.com/downloads'
 
+  if ($IsWindows -eq $false) {
+    # PowerShell 7 on Linux or macOS: npm there installs a POSIX command, which install.sh handles.
+    throw 'relayger install: on Linux and macOS, run in a terminal: curl -fsSL https://relayger.com/install.sh | sh'
+  }
   if ($PSVersionTable.PSVersion.Major -lt 6) {
     # Windows PowerShell 5.1 may default to TLS 1.0, which GitHub refuses.
     [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
@@ -101,7 +110,7 @@
   if (-not $onPath) {
     Write-Host "Add $prefix to your PATH (Settings > System > About > Advanced system settings > Environment Variables)."
   }
-  if ($IsWindows -ne $false -and (Get-ExecutionPolicy) -in 'Restricted', 'AllSigned') {
+  if ((Get-ExecutionPolicy) -in 'Restricted', 'AllSigned') {
     # PowerShell would pick npm's relayger.ps1 shim, which this policy blocks.
     Write-Host 'This PowerShell execution policy blocks npm command shims: run relayger.cmd, or allow them once with'
     Write-Host '  Set-ExecutionPolicy -Scope CurrentUser RemoteSigned'
@@ -112,4 +121,5 @@
   Write-Host '  relayger --help'
   Write-Host '  relayger --server https://relayger.com mcp --print-config   # for MCP host configuration'
   Write-Host 'Guide: https://relayger.com/agents.md'
+  Write-Host 'Install, update and uninstall: https://relayger.com/docs/install'
 }

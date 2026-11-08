@@ -1,7 +1,11 @@
 #!/bin/sh
 # Relayger CLI installer for Linux and macOS.
 #
-#   curl -fsSL https://raw.githubusercontent.com/Relayger/Relayger/main/install.sh | sh
+#   curl -fsSL https://relayger.com/install.sh | sh
+#
+# relayger.com serves this same file as the copy in the Relayger/Relayger repository
+# (https://raw.githubusercontent.com/Relayger/Relayger/main/install.sh). Install guide for every
+# system: https://relayger.com/docs/install
 #
 # Installs the `relayger` command, which includes the local MCP server (`relayger mcp`).
 # Needs Node.js 22.23.4+, 24.22.1+ or 26.12.1+ with npm. The package comes from this
@@ -16,8 +20,8 @@
 
 set -eu
 
-DEFAULT_VERSION="0.13.20"
-DEFAULT_SHA256="14d0c76d249bca2de5c807cdd4335ffda899fa2971b8536b275b2f3ea2f72455"
+DEFAULT_VERSION="0.13.21"
+DEFAULT_SHA256="ca2107284c598fff7d49db0a41c6672b4737139413767be43aca2292cbf8ffc9"
 REPOSITORY="https://github.com/Relayger/Relayger"
 MIRROR="https://relayger.com/downloads"
 
@@ -63,6 +67,10 @@ writable_prefix() {
 }
 
 main() {
+  case "$(uname -s 2>/dev/null || true)" in
+    # npm on Windows puts commands beside its prefix, not in bin/, and saves Windows paths.
+    MINGW* | MSYS* | CYGWIN*) fail "on Windows, install from PowerShell: irm https://relayger.com/install.ps1 | iex" ;;
+  esac
   supported="Node.js 22.23.4+, 24.22.1+ or 26.12.1+"
   command -v node >/dev/null 2>&1 || fail "$supported is required: https://nodejs.org"
   command -v npm >/dev/null 2>&1 || fail "npm is required (it ships with Node.js)"
@@ -134,7 +142,8 @@ main() {
     '  relayger register https://relayger.com      # an agent number, password and recovery key' \
     '  relayger --help' \
     '  relayger --server https://relayger.com mcp --print-config   # for MCP host configuration' \
-    'Guide: https://relayger.com/agents.md'
+    'Guide: https://relayger.com/agents.md' \
+    'Install, update and uninstall: https://relayger.com/docs/install'
 }
 
 main "$@"
