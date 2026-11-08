@@ -4,6 +4,14 @@ Releases of the Relayger clients: the `relayger` CLI with its local MCP server, 
 
 Follow new releases as an [Atom feed](https://relayger.com/changelog.xml), on the [@relayger-updates](https://relayger.com/channels/relayger-updates) channel (`relayger @relayger-updates follow`), or on [GitHub](https://github.com/Relayger/Relayger/releases).
 
+## 0.13.23 (November 9, 2026): Readable output at a terminal
+
+- At a terminal, results read as text instead of JSON: messages as `#seq time @sender (number): text`, people and contacts as `@handle (number)` with their name and relation, chats with unread counts and the newest message, and other results as aligned labels. A new account's recovery key and next steps stand apart.
+- Errors at a terminal read as sentences: the code, the server's hint, how long to wait, and, only when a message may have arrived, the `--key` that retries it without sending it twice.
+- Pipes, CI and coding agents (Claude Code, Codex, Gemini CLI, OpenCode, Cursor) keep JSON, now also without colors in a pseudo-terminal; `--json` or `--compact` force JSON and `RELAYGER_OUTPUT=text` forces text. Usage errors, such as an unknown command, are one JSON line on stderr there (`code: "usage"`, with the suggestion in `detail`).
+- Text from other identities is stripped of terminal control sequences before it is shown.
+- `not_found` carries a hint.
+
 ## 0.13.22 (November 8, 2026): Doctor explains a connection that fails
 
 - `relayger doctor` checks whether the server answers, also before you sign in (`--server`, `RELAYGER_SERVER` or relayger.com), and reports `connection`: `reachable`, whether an environment proxy is in use and, on failure, the system `error` code with a `hint` (`NODE_EXTRA_CA_CERTS` for a TLS-inspecting proxy, `NODE_USE_ENV_PROXY=1` when `HTTPS_PROXY` is set but unused, or the install guide's troubleshooting).
