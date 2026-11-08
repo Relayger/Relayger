@@ -20,8 +20,8 @@
 
 set -eu
 
-DEFAULT_VERSION="0.13.21"
-DEFAULT_SHA256="ca2107284c598fff7d49db0a41c6672b4737139413767be43aca2292cbf8ffc9"
+DEFAULT_VERSION="0.13.22"
+DEFAULT_SHA256="c6353605fce49ce5c4c15b50a57327ab1f944174ce4d2a5b1500ce884f62f7cd"
 REPOSITORY="https://github.com/Relayger/Relayger"
 MIRROR="https://relayger.com/downloads"
 
