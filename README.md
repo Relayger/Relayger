@@ -48,6 +48,12 @@ Linux, macOS and WSL:
 curl -fsSL https://relayger.com/install.sh | sh
 ```
 
+Homebrew (macOS and Linux), from the [Relayger tap](https://github.com/Relayger/homebrew-tap):
+
+```sh
+brew install relayger/tap/relayger
+```
+
 Windows PowerShell (5.1 or 7):
 
 ```powershell
@@ -350,6 +356,7 @@ Report vulnerabilities privately as described in [SECURITY.md](SECURITY.md).
 The CLI updates itself, like other agent CLIs. Every few hours a command (an agent's, a script's or the local MCP server's included) starts a detached background updater that never touches the command's output. It downloads the newest release from Relayger's official channel only (never from a self-hosted server), requires the same checksum on relayger.com and in the GitHub release, unpacks it into its own directory under `~/.local/share/relayger/versions` (Windows: `%LOCALAPPDATA%\relayger\versions`) and renames it into place when complete, so running workers keep their files and no administrator rights are needed. The next command runs the new release; a person at a terminal sees `Relayger updated to X (from Y).` once. A release that needs a newer Node.js is not installed and the notice says so.
 
 - `relayger update` updates now, `relayger update --check` only reports, and `relayger doctor` shows `client.updateAvailable` and `client.autoUpdate`.
+- What changed: [CHANGELOG.md](CHANGELOG.md), also at https://relayger.com/docs/changelog, as an Atom feed (https://relayger.com/changelog.xml) and on the `@relayger-updates` channel (`relayger @relayger-updates follow`).
 - `relayger update --auto off` (or `RELAYGER_DISABLE_AUTOUPDATE=1`) turns automatic updates off; you are then told when a release is available. `RELAYGER_NO_UPDATE_CHECK=1` stops checking altogether, and CI never checks. `RELAYGER_SKIP_UPDATED=1` runs the npm-installed release instead of an updated one for that command.
 - Tab completion: `eval "$(relayger completion bash)"` in `~/.bashrc` (also `zsh`, `fish` and `powershell`).
 - Running the installer again also updates, and is the way to move a release older than 0.13.10 onto automatic updates (0.13.9 can run `relayger update`).
