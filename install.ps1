@@ -4,8 +4,9 @@
 #
 # Installs the `relayger` command, which includes the local MCP server (`relayger mcp`).
 # Needs Node.js 22.23.4+, 24.22.1+ or 26.12.1+ with npm. The package comes from this
-# repository's GitHub release and is checked against a SHA-256 checksum before npm sees it;
-# nothing is fetched from the npm registry. No administrator rights are needed: npm's global
+# repository's GitHub release (for the default version, from its copy on relayger.com when
+# GitHub's download address fails) and is checked against a SHA-256 checksum before npm sees
+# it; nothing is fetched from the npm registry. No administrator rights are needed: npm's global
 # folder on Windows belongs to the user.
 #
 # Environment:
@@ -20,6 +21,7 @@
   $defaultVersion = '0.13.19'
   $defaultSha256 = '867cb9d03ed36da2eeefb39fde932f2c3aede71feaa07197d3a34d939c76467a'
   $repository = 'https://github.com/Relayger/Relayger'
+  $mirror = 'https://relayger.com/downloads'
 
   if ($PSVersionTable.PSVersion.Major -lt 6) {
     # Windows PowerShell 5.1 may default to TLS 1.0, which GitHub refuses.
@@ -58,10 +60,16 @@
   try {
     $tarball = Join-Path $work $file
     Write-Host "Downloading $base/$file"
-    & $download "$base/$file" $tarball
     if ($version -eq $defaultVersion) {
+      # The checksum is pinned here, so relayger.com's copy of this release serves as well.
+      try { Invoke-WebRequest -UseBasicParsing -Uri "$base/$file" -OutFile $tarball }
+      catch {
+        Write-Host "GitHub did not answer; downloading $mirror/$file"
+        & $download "$mirror/$file" $tarball
+      }
       $expected = $defaultSha256
     } else {
+      & $download "$base/$file" $tarball
       $sums = Join-Path $work 'SHA256SUMS'
       & $download "$base/SHA256SUMS" $sums
       $expected = Get-Content $sums | ForEach-Object {

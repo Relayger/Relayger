@@ -5,8 +5,9 @@
 #
 # Installs the `relayger` command, which includes the local MCP server (`relayger mcp`).
 # Needs Node.js 22.23.4+, 24.22.1+ or 26.12.1+ with npm. The package comes from this
-# repository's GitHub release and is checked against a SHA-256 checksum before npm sees it;
-# nothing is fetched from the npm registry. No sudo: when npm's global prefix is not
+# repository's GitHub release (for the default version, from its copy on relayger.com when
+# GitHub's download address fails) and is checked against a SHA-256 checksum before npm sees
+# it; nothing is fetched from the npm registry. No sudo: when npm's global prefix is not
 # writable, the CLI goes to ~/.local.
 #
 # Environment:
@@ -18,20 +19,25 @@ set -eu
 DEFAULT_VERSION="0.13.19"
 DEFAULT_SHA256="867cb9d03ed36da2eeefb39fde932f2c3aede71feaa07197d3a34d939c76467a"
 REPOSITORY="https://github.com/Relayger/Relayger"
+MIRROR="https://relayger.com/downloads"
 
 fail() {
   printf 'relayger install: %s\n' "$1" >&2
   exit 1
 }
 
-download() {
+fetch() {
   if command -v curl >/dev/null 2>&1; then
-    curl -fsSL --proto '=https' --tlsv1.2 --retry 3 -o "$2" "$1" || fail "could not download $1"
+    curl -fsSL --proto '=https' --tlsv1.2 --retry 3 -o "$2" "$1"
   elif command -v wget >/dev/null 2>&1; then
-    wget -q -O "$2" "$1" || fail "could not download $1"
+    wget -q -O "$2" "$1"
   else
     fail "curl or wget is required"
   fi
+}
+
+download() {
+  fetch "$1" "$2" || fail "could not download $1"
 }
 
 sha256() {
@@ -86,10 +92,15 @@ main() {
   trap 'exit 130' INT TERM
 
   printf 'Downloading %s\n' "$base/$file"
-  download "$base/$file" "$work/$file"
   if [ "$version" = "$DEFAULT_VERSION" ]; then
+    # The checksum is pinned here, so relayger.com's copy of this release serves as well.
+    if ! fetch "$base/$file" "$work/$file"; then
+      printf 'GitHub did not answer; downloading %s\n' "$MIRROR/$file"
+      download "$MIRROR/$file" "$work/$file"
+    fi
     expected="$DEFAULT_SHA256"
   else
+    download "$base/$file" "$work/$file"
     download "$base/SHA256SUMS" "$work/SHA256SUMS"
     expected=$(awk -v f="$file" '$2 == f { print $1 }' "$work/SHA256SUMS")
   fi

@@ -54,7 +54,7 @@ Windows (PowerShell 5.1 or 7):
 irm https://raw.githubusercontent.com/Relayger/Relayger/main/install.ps1 | iex
 ```
 
-You need Node.js 22.23.4+, 24.22.1+ or 26.12.1+ with npm. The installer downloads `relayger-cli-0.13.19.tgz` from this repository's [release](https://github.com/Relayger/Relayger/releases), checks its SHA-256 and installs it with npm. The CLI bundles its dependencies, so nothing is fetched from the npm registry; their licenses ship in `dist/THIRD-PARTY-LICENSES.txt`. It needs no sudo or administrator rights and installs the `relayger` command.
+You need Node.js 22.23.4+, 24.22.1+ or 26.12.1+ with npm. The installer downloads `relayger-cli-0.13.19.tgz` from this repository's [release](https://github.com/Relayger/Relayger/releases) (or, when GitHub's download address fails, the same file from `https://relayger.com/downloads/`), checks its SHA-256 and installs it with npm. The CLI bundles its dependencies, so nothing is fetched from the npm registry; their licenses ship in `dist/THIRD-PARTY-LICENSES.txt`. It needs no sudo or administrator rights and installs the `relayger` command.
 
 | Variable | Effect |
 | --- | --- |
